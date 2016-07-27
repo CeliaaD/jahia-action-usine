@@ -1,7 +1,11 @@
 package actions;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
+
+import au.com.bytecode.opencsv.CSVReader;
 
 import javax.jcr.Node;
 import javax.servlet.http.HttpServletRequest;
@@ -29,23 +33,31 @@ public class BulkAddPages extends Action {
 			JCRSessionWrapper session, Map<String, List<String>> parameters,
 			URLResolver urlResolver) throws Exception {
 		
+		
+		
+        
+		
+		//******************Ajout des noeuds
+		
 		org.jahia.registries.ServicesRegistry s = org.jahia.registries.ServicesRegistry.getInstance();
-		
-		System.out.println(s.getJahiaSitesService().getSiteByKey("usineagences").toString());
-		
 		JahiaSite site = s.getJahiaSitesService().getSiteByKey("usineagences");
 		
+		//System.out.println(s.getJahiaSitesService().getSiteByKey("usineagences").toString());
 		
 		JCRNodeWrapper node = s.getJahiaSitesService().getSiteByKey("usineagences", session).getHome();
 		
 		JCRNodeIteratorWrapper it = node.getNodes();
-		
 		while (it.hasNext()) System.out.println(it.nextNode().toString());
 		
-		System.out.println("Added");
+		/*JCRNodeWrapper titre = node.getNode("header").addNode("intro", "siteusiner:titre");
+		titre.setProperty("Titre", "ceci est un titre");*/
 		JCRNodeWrapper newnode = node.addNode("agence_niort", "jnt:page");
-		String id = newnode.getIdentifier();
-		JCRPublicationService.getInstance().publishByMainId(id);
+		newnode.setProperty("j:templateName", "home");
+		newnode.setProperty("jcr:title", "agenceNiort");
+		String id = node.getIdentifier();
+
+		session.save();
+		//JCRPublicationService.getInstance().publishByMainId(id);
 		
 		
 		
