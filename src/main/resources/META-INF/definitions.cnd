@@ -1,0 +1,5 @@
+<jnt = 'http://www.jahia.org/jahia/nt/1.0'>
+<jmix = 'http://www.jahia.org/jahia/mix/1.0'>
+<test1 = 'http://www.example.org/testbulk/nt/1.0'>
+
+[test1:testbulkcomponent] > jnt:content, mix:title, jmix:studioOnly, jmix:siteComponent
