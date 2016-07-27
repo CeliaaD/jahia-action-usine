@@ -11,6 +11,7 @@ import org.jahia.bin.Action;
 import org.jahia.bin.ActionResult;
 import org.jahia.services.content.JCRNodeIteratorWrapper;
 import org.jahia.services.content.JCRNodeWrapper;
+import org.jahia.services.content.JCRPublicationService;
 import org.jahia.services.content.JCRSessionWrapper;
 import org.jahia.services.render.RenderContext;
 import org.jahia.services.render.Resource;
@@ -42,11 +43,10 @@ public class BulkAddPages extends Action {
 		while (it.hasNext()) System.out.println(it.nextNode().toString());
 		
 		System.out.println("Added");
-		node.addNode("agence_niort", "jnt:page");
+		JCRNodeWrapper newnode = node.addNode("agence_niort", "jnt:page");
+		String id = newnode.getIdentifier();
+		JCRPublicationService.getInstance().publishByMainId(id);
 		
-		JCRNodeIteratorWrapper it2 = node.getNodes();
-		
-		while (it2.hasNext()) System.out.println(it2.nextNode().toString());
 		
 		
 		//s.getJahiaSitesService().getSitesNames();
